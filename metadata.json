@@ -1,0 +1,6 @@
+{
+  "name": "Farine & Fig",
+  "description": "Small-batch patisserie, custom celebration cakes, weekly pastry drops, baking workshops, corporate gifting, and wholesale cafe partnerships.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
