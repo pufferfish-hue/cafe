@@ -1,18 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-  --color-canvas: #FAF9F6;
-  --color-surface: #F2EFE9;
+  --color-canvas: #FAF8F5;
+  --color-surface: #F3EFE8;
+  --color-surface-deep: #EBE4D9;
   --color-surface-elevated: #FFFFFF;
-  --color-ink: #1A1917;
-  --color-ink-muted: #5E5B55;
-  --color-accent: #2D5A3D;
-  --color-accent-hover: #22452F;
-  --color-hairline: rgba(26, 25, 23, 0.1);
+  --color-ink: #2B2926;
+  --color-ink-muted: #6E685F;
+  --color-accent: #3E5643;
+  --color-accent-hover: #2F4334;
+  --color-rose: #9B6B65;
+  --color-hairline: rgba(43, 41, 38, 0.1);
 }
 
 @layer base {

@@ -20,7 +20,6 @@ export const CorporateWholesaleSection: React.FC<
   const [customRibbonNote, setCustomRibbonNote] = useState('');
   const [corpAdded, setCorpAdded] = useState(false);
 
-  // Wholesale & Collab Pilot Inquiry Form
   const [programType, setProgramType] = useState<'daily-wholesale' | 'collab-pilot'>(
     'daily-wholesale'
   );
@@ -74,23 +73,23 @@ export const CorporateWholesaleSection: React.FC<
   return (
     <section
       id="gifting-wholesale"
-      className="py-16 lg:py-20 border-b border-[rgba(26,25,23,0.1)]"
+      className="py-16 lg:py-20 bg-[#FAF8F5] border-b border-[rgba(43,41,38,0.1)]"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="mb-10">
-          <p className="text-xs font-medium tracking-wider uppercase text-[#5E5B55] mb-2">
-            Hospitality &amp; B2B Programs
+          <p className="text-xs font-medium tracking-wider uppercase text-[#6E685F] mb-2">
+            Corporate Orders · Hospitality &amp; Cafe Supply
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl text-[#1A1917] [text-wrap:balance]">
+          <h2 className="font-display text-3xl sm:text-4xl text-[#2B2926] [text-wrap:balance]">
             Corporate Gifting &amp; Cafe Wholesale
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column: Corporate Gifting & Event Boxes */}
-          <div className="lg:col-span-6 bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] p-6 sm:p-8 flex flex-col justify-between gap-6">
+          <div className="lg:col-span-6 bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] p-6 sm:p-8 flex flex-col justify-between gap-6">
             <div>
-              <div className="aspect-[16/9] w-full rounded-md overflow-hidden border border-[rgba(26,25,23,0.08)] mb-6">
+              <div className="aspect-[16/9] w-full rounded-md overflow-hidden border border-[rgba(43,41,38,0.08)] mb-6">
                 <ArtisanVisual
                   variant="corporate"
                   className="w-full h-full"
@@ -98,13 +97,12 @@ export const CorporateWholesaleSection: React.FC<
                 />
               </div>
 
-              <h3 className="font-display text-2xl text-[#1A1917] mb-2">
+              <h3 className="font-display text-2xl text-[#2B2926] mb-2">
                 Corporate Gifting &amp; Event Boxes
               </h3>
-              <p className="text-sm text-[#5E5B55] leading-relaxed mb-6">
-                Ribbon-tied pastry assortments for studio briefings, client gifting,
-                and off-sites. Custom printed menu cards included on orders of 24+
-                pieces.
+              <p className="text-sm text-[#6E685F] leading-relaxed mb-6">
+                Brand-matched ribbon boxes, individual door gifts, and dessert tables
+                crafted for studio briefings, client gifting, and milestones.
               </p>
 
               <div className="space-y-3 mb-5">
@@ -117,19 +115,19 @@ export const CorporateWholesaleSection: React.FC<
                       onClick={() => setSelectedTierId(tier.id)}
                       className={`w-full text-left p-4 rounded-md border transition-colors cursor-pointer ${
                         active
-                          ? 'border-[#2D5A3D] bg-[#2D5A3D]/5'
-                          : 'border-[rgba(26,25,23,0.12)] hover:border-[#1A1917]'
+                          ? 'border-[#3E5643] bg-[#3E5643]/5'
+                          : 'border-[rgba(43,41,38,0.12)] hover:border-[#2B2926]'
                       }`}
                     >
                       <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="text-sm font-semibold text-[#1A1917]">
+                        <span className="text-sm font-semibold text-[#2B2926]">
                           {tier.name} · {tier.pieceCount} pieces
                         </span>
-                        <span className="font-mono text-sm font-medium text-[#1A1917] tabular-nums">
+                        <span className="font-mono text-sm font-medium text-[#2B2926] tabular-nums">
                           ${tier.price}
                         </span>
                       </div>
-                      <p className="text-xs text-[#5E5B55]">{tier.contents}</p>
+                      <p className="text-xs text-[#6E685F]">{tier.contents}</p>
                     </button>
                   );
                 })}
@@ -138,9 +136,9 @@ export const CorporateWholesaleSection: React.FC<
               <div>
                 <label
                   htmlFor="corp-ribbon-note"
-                  className="block text-xs font-medium text-[#5E5B55] mb-1.5"
+                  className="block text-xs font-medium text-[#6E685F] mb-1.5"
                 >
-                  Optional Company Name or Event Card Message
+                  Optional Company Ribbon Color or Card Message
                 </label>
                 <input
                   id="corp-ribbon-note"
@@ -148,15 +146,15 @@ export const CorporateWholesaleSection: React.FC<
                   maxLength={60}
                   value={customRibbonNote}
                   onChange={(e) => setCustomRibbonNote(e.target.value)}
-                  placeholder="e.g., Welcome to Q4 Design Offsite"
-                  className="w-full px-3.5 py-2 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] placeholder:text-[#5E5B55]/60 focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                  placeholder="e.g., Sage ribbon · Welcome to Design Offsite"
+                  className="w-full px-3.5 py-2 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] placeholder:text-[#6E685F]/60 focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                 />
               </div>
             </div>
 
-            <div className="pt-5 border-t border-[rgba(26,25,23,0.08)] flex items-center justify-between gap-4">
-              <div className="text-xs text-[#5E5B55]">
-                <span className="block font-medium text-[#1A1917]">
+            <div className="pt-5 border-t border-[rgba(43,41,38,0.08)] flex items-center justify-between gap-4">
+              <div className="text-xs text-[#6E685F]">
+                <span className="block font-medium text-[#2B2926]">
                   {selectedTier.serves}
                 </span>
                 <span>{selectedTier.leadTime}</span>
@@ -166,8 +164,8 @@ export const CorporateWholesaleSection: React.FC<
                 onClick={handleAddCorporateBox}
                 className={`inline-flex items-center gap-2 px-5 py-2.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                   corpAdded
-                    ? 'bg-[#1A1917] text-[#FAF9F6]'
-                    : 'bg-[#2D5A3D] text-[#FAF9F6] hover:bg-[#22452F]'
+                    ? 'bg-[#2B2926] text-[#FAF8F5]'
+                    : 'bg-[#3E5643] text-[#FAF8F5] hover:bg-[#2F4334]'
                 }`}
               >
                 {corpAdded ? (
@@ -186,29 +184,29 @@ export const CorporateWholesaleSection: React.FC<
           </div>
 
           {/* Right Column: Wholesale Cafes & Collab Pilots */}
-          <div className="lg:col-span-6 bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] p-6 sm:p-8 flex flex-col justify-between gap-6">
+          <div className="lg:col-span-6 bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] p-6 sm:p-8 flex flex-col justify-between gap-6">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wider text-[#5E5B55] mb-2">
+              <p className="text-xs font-medium uppercase tracking-wider text-[#6E685F] mb-2">
                 Partner Coffee Bars &amp; Roasteries
               </p>
-              <h3 className="font-display text-2xl text-[#1A1917] mb-2">
+              <h3 className="font-display text-2xl text-[#2B2926] mb-2">
                 Wholesale Cafes &amp; Collab Pilots
               </h3>
-              <p className="text-sm text-[#5E5B55] leading-relaxed mb-6">
+              <p className="text-sm text-[#6E685F] leading-relaxed mb-6">
                 We bake and deliver morning viennoiserie, cardamom knots, and sliced
-                tea loaves by 6:45 AM for partner cafes, and run 6-week co-branded
-                seasonal pastry pilots.
+                tea cakes before opening hours, and run 6-week co-branded seasonal
+                pastry pilots.
               </p>
 
               {wholesaleSubmitted ? (
-                <div className="p-6 rounded-md bg-[#FAF9F6] border border-[#2D5A3D]/30 space-y-3">
-                  <div className="flex items-center gap-2 text-sm font-semibold text-[#2D5A3D]">
+                <div className="p-6 rounded-md bg-[#FAF8F5] border border-[#3E5643]/30 space-y-3">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-[#3E5643]">
                     <Check className="w-4 h-4" aria-hidden="true" />
                     <span>
                       Tasting Request Confirmed ({wholesaleSubmitted.referenceId})
                     </span>
                   </div>
-                  <p className="text-sm text-[#1A1917]">
+                  <p className="text-sm text-[#2B2926]">
                     Thank you, <strong>{wholesaleSubmitted.cafeName}</strong>. Our head
                     baker will reach out within 24 hours to schedule your complimentary
                     pastry sample box for{' '}
@@ -217,7 +215,7 @@ export const CorporateWholesaleSection: React.FC<
                   <button
                     type="button"
                     onClick={() => setWholesaleSubmitted(null)}
-                    className="text-xs font-medium text-[#2D5A3D] underline underline-offset-4 cursor-pointer"
+                    className="text-xs font-medium text-[#3E5643] underline underline-offset-4 cursor-pointer"
                   >
                     Submit another inquiry
                   </button>
@@ -225,7 +223,7 @@ export const CorporateWholesaleSection: React.FC<
               ) : (
                 <form onSubmit={handleSubmitWholesale} className="space-y-4">
                   <div>
-                    <span className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-2">
+                    <span className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2">
                       Partnership Track
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -234,14 +232,14 @@ export const CorporateWholesaleSection: React.FC<
                         onClick={() => setProgramType('daily-wholesale')}
                         className={`text-left p-3.5 rounded-md border transition-colors cursor-pointer ${
                           programType === 'daily-wholesale'
-                            ? 'border-[#2D5A3D] bg-[#2D5A3D]/5'
-                            : 'border-[rgba(26,25,23,0.12)] hover:border-[#1A1917]'
+                            ? 'border-[#3E5643] bg-[#3E5643]/5'
+                            : 'border-[rgba(43,41,38,0.12)] hover:border-[#2B2926]'
                         }`}
                       >
-                        <span className="block text-sm font-semibold text-[#1A1917]">
+                        <span className="block text-sm font-semibold text-[#2B2926]">
                           Wholesale Cafe Supply
                         </span>
-                        <span className="text-xs text-[#5E5B55]">
+                        <span className="text-xs text-[#6E685F]">
                           Recurring AM pastry delivery
                         </span>
                       </button>
@@ -251,14 +249,14 @@ export const CorporateWholesaleSection: React.FC<
                         onClick={() => setProgramType('collab-pilot')}
                         className={`text-left p-3.5 rounded-md border transition-colors cursor-pointer ${
                           programType === 'collab-pilot'
-                            ? 'border-[#2D5A3D] bg-[#2D5A3D]/5'
-                            : 'border-[rgba(26,25,23,0.12)] hover:border-[#1A1917]'
+                            ? 'border-[#3E5643] bg-[#3E5643]/5'
+                            : 'border-[rgba(43,41,38,0.12)] hover:border-[#2B2926]'
                         }`}
                       >
-                        <span className="block text-sm font-semibold text-[#1A1917]">
+                        <span className="block text-sm font-semibold text-[#2B2926]">
                           Collab / Pilot Run
                         </span>
-                        <span className="text-xs text-[#5E5B55]">
+                        <span className="text-xs text-[#6E685F]">
                           4–6 week co-branded menu pilot
                         </span>
                       </button>
@@ -268,7 +266,7 @@ export const CorporateWholesaleSection: React.FC<
                   <div>
                     <label
                       htmlFor="ws-cafe-name"
-                      className="block text-xs font-medium text-[#5E5B55] mb-1.5"
+                      className="block text-xs font-medium text-[#6E685F] mb-1.5"
                     >
                       Cafe or Hospitality Business Name
                     </label>
@@ -278,8 +276,8 @@ export const CorporateWholesaleSection: React.FC<
                       required
                       value={cafeName}
                       onChange={(e) => setCafeName(e.target.value)}
-                      placeholder="e.g., Alder & Bean Coffee"
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                      placeholder="e.g., Neil Road Espresso Bar"
+                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                     />
                   </div>
 
@@ -287,7 +285,7 @@ export const CorporateWholesaleSection: React.FC<
                     <div>
                       <label
                         htmlFor="ws-email"
-                        className="block text-xs font-medium text-[#5E5B55] mb-1.5"
+                        className="block text-xs font-medium text-[#6E685F] mb-1.5"
                       >
                         Buyer Email
                       </label>
@@ -298,13 +296,13 @@ export const CorporateWholesaleSection: React.FC<
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
                         placeholder="buyer@cafe.com"
-                        className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                        className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                       />
                     </div>
                     <div>
                       <label
                         htmlFor="ws-volume"
-                        className="block text-xs font-medium text-[#5E5B55] mb-1.5"
+                        className="block text-xs font-medium text-[#6E685F] mb-1.5"
                       >
                         Estimated Weekly Volume
                       </label>
@@ -312,7 +310,7 @@ export const CorporateWholesaleSection: React.FC<
                         id="ws-volume"
                         value={weeklyVolume}
                         onChange={(e) => setWeeklyVolume(e.target.value)}
-                        className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                        className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                       >
                         <option>60–120 pastries / week</option>
                         <option>120–250 pastries / week</option>
@@ -325,7 +323,7 @@ export const CorporateWholesaleSection: React.FC<
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full sm:w-auto px-6 py-2.5 text-sm font-medium text-[#FAF9F6] bg-[#1A1917] hover:bg-[#33302B] rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1A1917]"
+                      className="w-full sm:w-auto px-6 py-2.5 text-sm font-medium text-[#FAF8F5] bg-[#2B2926] hover:bg-[#3F3C37] rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2B2926]"
                     >
                       Request Tasting Sample Box
                     </button>
@@ -334,7 +332,7 @@ export const CorporateWholesaleSection: React.FC<
               )}
             </div>
 
-            <div className="pt-5 border-t border-[rgba(26,25,23,0.08)] flex flex-wrap items-center justify-between gap-4 text-xs text-[#5E5B55]">
+            <div className="pt-5 border-t border-[rgba(43,41,38,0.08)] flex flex-wrap items-center justify-between gap-4 text-xs text-[#6E685F]">
               <span>Wholesale minimums start at 24 pieces/delivery</span>
               <span className="tabular-nums">Net-15 billing for approved partners</span>
             </div>

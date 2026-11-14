@@ -30,16 +30,16 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
   onChangeTab,
   onAddToBag,
 }) => {
-  // Custom Cake state
   const [selectedSizeId, setSelectedSizeId] = useState(CAKE_SIZES[1].id);
   const [selectedSpongeId, setSelectedSpongeId] = useState(CAKE_SPONGES[0].id);
   const [selectedFillingId, setSelectedFillingId] = useState(CAKE_FILLINGS[0].id);
   const [selectedFinishId, setSelectedFinishId] = useState(CAKE_FINISHES[0].id);
+  const [includeCandles, setIncludeCandles] = useState(false);
+  const [includeGreetingCard, setIncludeGreetingCard] = useState(false);
   const [eventDate, setEventDate] = useState('2026-11-28');
   const [inscription, setInscription] = useState('');
   const [cakeAdded, setCakeAdded] = useState(false);
 
-  // Workshop / Market added feedback
   const [addedFeedbackId, setAddedFeedbackId] = useState<string | null>(null);
   const [reservedSeatsMap, setReservedSeatsMap] = useState<Record<string, number>>({});
 
@@ -48,8 +48,13 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
   const filling = CAKE_FILLINGS.find((f) => f.id === selectedFillingId) || CAKE_FILLINGS[0];
   const finish = CAKE_FINISHES.find((f) => f.id === selectedFinishId) || CAKE_FINISHES[0];
 
+  const addonsTotal = (includeCandles ? 8 : 0) + (includeGreetingCard ? 6 : 0);
   const totalCakePrice =
-    size.basePrice + sponge.priceDelta + filling.priceDelta + finish.priceDelta;
+    size.basePrice +
+    sponge.priceDelta +
+    filling.priceDelta +
+    finish.priceDelta +
+    addonsTotal;
 
   const handleAddCustomCake = (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,12 +62,14 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
       size.label,
       sponge.name,
       filling.name,
-      `Pickup ${eventDate}`,
+      `Date ${eventDate}`,
+      includeCandles ? 'Sparkling Taper Candles' : '',
+      includeGreetingCard ? 'Botanical Card' : '',
       inscription.trim() ? `Note: "${inscription.trim()}"` : '',
     ].filter(Boolean);
 
     onAddToBag({
-      id: `custom-cake-${size.id}-${sponge.id}-${filling.id}-${eventDate}`,
+      id: `custom-cake-${size.id}-${sponge.id}-${filling.id}-${eventDate}-${addonsTotal}`,
       name: `Custom Celebration Cake (${size.label})`,
       subtitle: noteParts.join(' · '),
       price: totalCakePrice,
@@ -120,15 +127,15 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
   return (
     <section
       id="atelier-studio"
-      className="py-16 lg:py-20 bg-[#F2EFE9]/55 border-b border-[rgba(26,25,23,0.1)]"
+      className="py-16 lg:py-20 bg-[#F3EFE8] border-b border-[rgba(43,41,38,0.1)]"
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <p className="text-xs font-medium tracking-wider uppercase text-[#5E5B55] mb-2">
-              Bespoke Commissions · Classes · Weekend Booths
+            <p className="text-xs font-medium tracking-wider uppercase text-[#6E685F] mb-2">
+              Celebrations · Hands-On Baking · Weekend Booths
             </p>
-            <h2 className="font-display text-3xl sm:text-4xl text-[#1A1917] [text-wrap:balance]">
+            <h2 className="font-display text-3xl sm:text-4xl text-[#2B2926] [text-wrap:balance]">
               Custom Cakes, Workshops &amp; Pop-Ups
             </h2>
           </div>
@@ -136,7 +143,7 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
           <div
             role="tablist"
             aria-label="Atelier studio sections"
-            className="inline-flex items-center gap-1 p-1 bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] self-start md:self-auto"
+            className="inline-flex items-center gap-1 p-1 bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] self-start md:self-auto"
           >
             <button
               type="button"
@@ -145,8 +152,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
               onClick={() => onChangeTab('cakes')}
               className={`px-4 py-2 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'cakes'
-                  ? 'bg-[#2D5A3D] text-[#FAF9F6]'
-                  : 'text-[#5E5B55] hover:text-[#1A1917]'
+                  ? 'bg-[#3E5643] text-[#FAF8F5]'
+                  : 'text-[#6E685F] hover:text-[#2B2926]'
               }`}
             >
               Custom Cakes
@@ -158,8 +165,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
               onClick={() => onChangeTab('workshops')}
               className={`px-4 py-2 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'workshops'
-                  ? 'bg-[#2D5A3D] text-[#FAF9F6]'
-                  : 'text-[#5E5B55] hover:text-[#1A1917]'
+                  ? 'bg-[#3E5643] text-[#FAF8F5]'
+                  : 'text-[#6E685F] hover:text-[#2B2926]'
               }`}
             >
               Baking Workshops
@@ -171,8 +178,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
               onClick={() => onChangeTab('markets')}
               className={`px-4 py-2 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                 activeTab === 'markets'
-                  ? 'bg-[#2D5A3D] text-[#FAF9F6]'
-                  : 'text-[#5E5B55] hover:text-[#1A1917]'
+                  ? 'bg-[#3E5643] text-[#FAF8F5]'
+                  : 'text-[#6E685F] hover:text-[#2B2926]'
               }`}
             >
               Pop-Ups &amp; Markets
@@ -184,11 +191,10 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
         {activeTab === 'cakes' && (
           <form
             onSubmit={handleAddCustomCake}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] p-6 sm:p-8 lg:p-10"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] p-6 sm:p-8 lg:p-10"
           >
-            {/* Left Visual & Live Summary */}
             <div className="lg:col-span-5 flex flex-col justify-between gap-6">
-              <div className="aspect-[4/3] w-full rounded-md overflow-hidden border border-[rgba(26,25,23,0.08)]">
+              <div className="aspect-[4/3] w-full rounded-md overflow-hidden border border-[rgba(43,41,38,0.08)]">
                 <ArtisanVisual
                   variant="cake"
                   className="w-full h-full"
@@ -196,32 +202,32 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                 />
               </div>
 
-              <div className="pt-5 border-t border-[rgba(26,25,23,0.08)]">
-                <p className="text-xs font-medium uppercase tracking-wider text-[#5E5B55] mb-3">
-                  Your Commission Summary
+              <div className="pt-5 border-t border-[rgba(43,41,38,0.08)]">
+                <p className="text-xs font-medium uppercase tracking-wider text-[#6E685F] mb-3">
+                  Your Celebration Order Summary
                 </p>
                 <dl className="space-y-2 text-sm">
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#5E5B55]">Size</dt>
-                    <dd className="font-medium text-[#1A1917] text-right">
+                    <dt className="text-[#6E685F]">Size</dt>
+                    <dd className="font-medium text-[#2B2926] text-right">
                       {size.label} ({size.servings})
                     </dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#5E5B55]">Sponge</dt>
-                    <dd className="font-medium text-[#1A1917] text-right">
+                    <dt className="text-[#6E685F]">Sponge</dt>
+                    <dd className="font-medium text-[#2B2926] text-right">
                       {sponge.name}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#5E5B55]">Filling</dt>
-                    <dd className="font-medium text-[#1A1917] text-right">
+                    <dt className="text-[#6E685F]">Filling</dt>
+                    <dd className="font-medium text-[#2B2926] text-right">
                       {filling.name}
                     </dd>
                   </div>
                   <div className="flex justify-between gap-4">
-                    <dt className="text-[#5E5B55]">Finish</dt>
-                    <dd className="font-medium text-[#1A1917] text-right">
+                    <dt className="text-[#6E685F]">Finish</dt>
+                    <dd className="font-medium text-[#2B2926] text-right">
                       {finish.name}
                     </dd>
                   </div>
@@ -229,12 +235,10 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
               </div>
             </div>
 
-            {/* Right Interactive Configurator */}
             <div className="lg:col-span-7 flex flex-col justify-between gap-6">
               <div className="space-y-6">
-                {/* Size Selection */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-3">
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-3">
                     01. Tier &amp; Serving Size
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -247,39 +251,38 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                           onClick={() => setSelectedSizeId(option.id)}
                           className={`text-left p-3.5 rounded-md border transition-colors cursor-pointer ${
                             active
-                              ? 'border-[#2D5A3D] bg-[#2D5A3D]/5'
-                              : 'border-[rgba(26,25,23,0.12)] hover:border-[#1A1917]'
+                              ? 'border-[#3E5643] bg-[#3E5643]/5'
+                              : 'border-[rgba(43,41,38,0.12)] hover:border-[#2B2926]'
                           }`}
                         >
                           <div className="flex items-center justify-between gap-2 mb-0.5">
-                            <span className="text-sm font-semibold text-[#1A1917]">
+                            <span className="text-sm font-semibold text-[#2B2926]">
                               {option.label}
                             </span>
-                            <span className="font-mono text-xs text-[#1A1917] tabular-nums">
+                            <span className="font-mono text-xs text-[#2B2926] tabular-nums">
                               ${option.basePrice}
                             </span>
                           </div>
-                          <p className="text-xs text-[#5E5B55]">{option.servings}</p>
+                          <p className="text-xs text-[#6E685F]">{option.servings}</p>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Sponge & Filling Selectors */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label
                       htmlFor="cake-sponge"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2"
                     >
-                      02. Cake Sponge
+                      02. Sponge Infusion
                     </label>
                     <select
                       id="cake-sponge"
                       value={selectedSpongeId}
                       onChange={(e) => setSelectedSpongeId(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                     >
                       {CAKE_SPONGES.map((s) => (
                         <option key={s.id} value={s.id}>
@@ -287,21 +290,21 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                         </option>
                       ))}
                     </select>
-                    <p className="text-xs text-[#5E5B55] mt-1.5">{sponge.note}</p>
+                    <p className="text-xs text-[#6E685F] mt-1.5">{sponge.note}</p>
                   </div>
 
                   <div>
                     <label
                       htmlFor="cake-filling"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2"
                     >
-                      03. Seasonal Filling
+                      03. Cream &amp; Fruit Layer
                     </label>
                     <select
                       id="cake-filling"
                       value={selectedFillingId}
                       onChange={(e) => setSelectedFillingId(e.target.value)}
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                     >
                       {CAKE_FILLINGS.map((f) => (
                         <option key={f.id} value={f.id}>
@@ -309,14 +312,13 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                         </option>
                       ))}
                     </select>
-                    <p className="text-xs text-[#5E5B55] mt-1.5">{filling.note}</p>
+                    <p className="text-xs text-[#6E685F] mt-1.5">{filling.note}</p>
                   </div>
                 </div>
 
-                {/* Exterior Finish */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-2.5">
-                    04. Buttercream &amp; Botanical Finish
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2.5">
+                    04. Cream &amp; Botanical Styling
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {CAKE_FINISHES.map((option) => {
@@ -328,16 +330,14 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                           onClick={() => setSelectedFinishId(option.id)}
                           className={`text-left p-3 rounded-md border transition-colors cursor-pointer ${
                             active
-                              ? 'border-[#2D5A3D] bg-[#2D5A3D]/5'
-                              : 'border-[rgba(26,25,23,0.12)] hover:border-[#1A1917]'
+                              ? 'border-[#3E5643] bg-[#3E5643]/5'
+                              : 'border-[rgba(43,41,38,0.12)] hover:border-[#2B2926]'
                           }`}
                         >
-                          <div className="flex items-center justify-between gap-2 mb-1">
-                            <span className="text-xs font-semibold text-[#1A1917]">
-                              {option.name}
-                            </span>
-                          </div>
-                          <p className="text-xs font-mono text-[#5E5B55] tabular-nums">
+                          <span className="block text-xs font-semibold text-[#2B2926] mb-1">
+                            {option.name}
+                          </span>
+                          <p className="text-xs font-mono text-[#6E685F] tabular-nums">
                             {option.priceDelta === 0 ? 'Included' : `+$${option.priceDelta}`}
                           </p>
                         </button>
@@ -346,31 +346,69 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                   </div>
                 </div>
 
-                {/* Event Date & Inscription */}
+                {/* Celebratory Add-ons (Candles & Card) */}
+                <div>
+                  <span className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2.5">
+                    05. Celebratory Add-Ons
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <label className="flex items-center justify-between gap-3 p-3 rounded-md border border-[rgba(43,41,38,0.12)] bg-[#FAF8F5] cursor-pointer">
+                      <span className="flex items-center gap-2.5 text-xs font-medium text-[#2B2926]">
+                        <input
+                          type="checkbox"
+                          checked={includeCandles}
+                          onChange={(e) => setIncludeCandles(e.target.checked)}
+                          className="accent-[#3E5643] w-4 h-4"
+                        />
+                        Beeswax Taper Candles (Set of 6)
+                      </span>
+                      <span className="font-mono text-xs text-[#6E685F] tabular-nums">
+                        +$8
+                      </span>
+                    </label>
+                    <label className="flex items-center justify-between gap-3 p-3 rounded-md border border-[rgba(43,41,38,0.12)] bg-[#FAF8F5] cursor-pointer">
+                      <span className="flex items-center gap-2.5 text-xs font-medium text-[#2B2926]">
+                        <input
+                          type="checkbox"
+                          checked={includeGreetingCard}
+                          onChange={(e) =>
+                            setIncludeGreetingCard(e.target.checked)
+                          }
+                          className="accent-[#3E5643] w-4 h-4"
+                        />
+                        Botanical Linen Greeting Card
+                      </span>
+                      <span className="font-mono text-xs text-[#6E685F] tabular-nums">
+                        +$6
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label
                       htmlFor="cake-date"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2"
                     >
-                      05. Pickup / Celebration Date
+                      06. Celebration Date
                     </label>
                     <input
                       id="cake-date"
                       type="date"
                       value={eventDate}
-                      min="2026-11-18"
+                      min="2026-11-15"
                       onChange={(e) => setEventDate(e.target.value)}
                       required
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="cake-note"
-                      className="block text-xs font-semibold uppercase tracking-wider text-[#1A1917] mb-2"
+                      className="block text-xs font-semibold uppercase tracking-wider text-[#2B2926] mb-2"
                     >
-                      06. Optional Card or Plaque Note
+                      07. Plaque or Card Message
                     </label>
                     <input
                       id="cake-note"
@@ -378,30 +416,29 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                       maxLength={48}
                       value={inscription}
                       onChange={(e) => setInscription(e.target.value)}
-                      placeholder="e.g., Happy 30th Maya"
-                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF9F6] border border-[rgba(26,25,23,0.16)] rounded-md text-[#1A1917] placeholder:text-[#5E5B55]/60 focus-visible:outline-2 focus-visible:outline-[#2D5A3D]"
+                      placeholder="e.g., Happy Birthday Maya"
+                      className="w-full px-3.5 py-2.5 text-sm bg-[#FAF8F5] border border-[rgba(43,41,38,0.16)] rounded-md text-[#2B2926] placeholder:text-[#6E685F]/60 focus-visible:outline-2 focus-visible:outline-[#3E5643]"
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Action Bar */}
-              <div className="pt-5 border-t border-[rgba(26,25,23,0.1)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="pt-5 border-t border-[rgba(43,41,38,0.1)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-xs text-[#5E5B55] block">
+                  <span className="text-xs text-[#6E685F] block">
                     Estimated Custom Cake Total
                   </span>
-                  <span className="font-mono text-2xl font-medium text-[#1A1917] tabular-nums">
+                  <span className="font-mono text-2xl font-medium text-[#2B2926] tabular-nums">
                     ${totalCakePrice}
                   </span>
                 </div>
 
                 <button
                   type="submit"
-                  className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2D5A3D] ${
+                  className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3E5643] ${
                     cakeAdded
-                      ? 'bg-[#1A1917] text-[#FAF9F6]'
-                      : 'bg-[#2D5A3D] text-[#FAF9F6] hover:bg-[#22452F]'
+                      ? 'bg-[#2B2926] text-[#FAF8F5]'
+                      : 'bg-[#3E5643] text-[#FAF8F5] hover:bg-[#2F4334]'
                   }`}
                 >
                   {cakeAdded ? (
@@ -424,8 +461,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
         {/* TAB 2: BAKING WORKSHOPS */}
         {activeTab === 'workshops' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-4 bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] overflow-hidden flex flex-col">
-              <div className="aspect-[4/3] w-full border-b border-[rgba(26,25,23,0.08)]">
+            <div className="lg:col-span-4 bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] overflow-hidden flex flex-col">
+              <div className="aspect-[4/3] w-full border-b border-[rgba(43,41,38,0.08)]">
                 <ArtisanVisual
                   variant="workshop"
                   className="w-full h-full"
@@ -434,17 +471,17 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
               </div>
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-display text-2xl text-[#1A1917] mb-3">
+                  <h3 className="font-display text-2xl text-[#2B2926] mb-3">
                     Small-Group Kitchen Sessions
                   </h3>
-                  <p className="text-sm text-[#5E5B55] leading-relaxed">
+                  <p className="text-sm text-[#6E685F] leading-relaxed">
                     Held around our marble pastry island for 8–10 bakers at a time. All
-                    cultured butter, heritage flour, aprons, and espresso service are
+                    cultured butter, heritage flour, aprons, and tea service are
                     included.
                   </p>
                 </div>
-                <p className="mt-6 pt-4 border-t border-[rgba(26,25,23,0.08)] text-xs text-[#5E5B55]">
-                  Studio Location · 418 Linden Alley · Private team classes available
+                <p className="mt-6 pt-4 border-t border-[rgba(43,41,38,0.08)] text-xs text-[#6E685F]">
+                  Neil Road Flagship Studio · Private team classes available
                 </p>
               </div>
             </div>
@@ -458,11 +495,11 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                 return (
                   <div
                     key={ws.id}
-                    className="bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
+                    className="bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
                   >
                     <div className="space-y-2 max-w-xl">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#5E5B55]">
-                        <span className="inline-flex items-center gap-1.5 font-medium text-[#1A1917]">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#6E685F]">
+                        <span className="inline-flex items-center gap-1.5 font-medium text-[#2B2926]">
                           <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
                           {ws.date}
                         </span>
@@ -473,21 +510,21 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                           {remaining} of {ws.totalSeats} seats open
                         </span>
                       </div>
-                      <h3 className="text-lg font-semibold text-[#1A1917]">
+                      <h3 className="text-lg font-semibold text-[#2B2926]">
                         {ws.title}
                       </h3>
-                      <p className="text-sm text-[#5E5B55] leading-relaxed">
+                      <p className="text-sm text-[#6E685F] leading-relaxed">
                         {ws.description}
                       </p>
-                      <p className="text-xs text-[#2D5A3D] font-medium">
+                      <p className="text-xs text-[#3E5643] font-medium">
                         Take home: {ws.takeHome}
                       </p>
                     </div>
 
                     <div className="flex sm:flex-col items-center sm:items-end justify-between gap-3 shrink-0">
-                      <span className="font-mono text-xl font-medium text-[#1A1917] tabular-nums">
+                      <span className="font-mono text-xl font-medium text-[#2B2926] tabular-nums">
                         ${ws.price}
-                        <span className="text-xs font-sans text-[#5E5B55] ml-1">
+                        <span className="text-xs font-sans text-[#6E685F] ml-1">
                           / seat
                         </span>
                       </span>
@@ -497,8 +534,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                         onClick={() => handleReserveWorkshop(ws.id)}
                         className={`inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
                           isJustAdded
-                            ? 'bg-[#1A1917] text-[#FAF9F6]'
-                            : 'bg-[#2D5A3D] text-[#FAF9F6] hover:bg-[#22452F]'
+                            ? 'bg-[#2B2926] text-[#FAF8F5]'
+                            : 'bg-[#3E5643] text-[#FAF8F5] hover:bg-[#2F4334]'
                         }`}
                       >
                         {remaining === 0 ? (
@@ -523,8 +560,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
         {/* TAB 3: POP-UPS & FARMERS MARKETS */}
         {activeTab === 'markets' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            <div className="lg:col-span-4 bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] overflow-hidden flex flex-col">
-              <div className="aspect-[4/3] w-full border-b border-[rgba(26,25,23,0.08)]">
+            <div className="lg:col-span-4 bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] overflow-hidden flex flex-col">
+              <div className="aspect-[4/3] w-full border-b border-[rgba(43,41,38,0.08)]">
                 <ArtisanVisual
                   variant="market"
                   className="w-full h-full"
@@ -533,15 +570,15 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
               </div>
               <div className="p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-display text-2xl text-[#1A1917] mb-3">
-                    Weekend Market Schedule
+                  <h3 className="font-display text-2xl text-[#2B2926] mb-3">
+                    Weekend Pop-Up Schedule
                   </h3>
-                  <p className="text-sm text-[#5E5B55] leading-relaxed">
-                    Skip the morning sell-out line by pre-reserving a curated Market
-                    Tasting Box for pickup directly at our booth.
+                  <p className="text-sm text-[#6E685F] leading-relaxed">
+                    Skip the morning queue by pre-reserving a curated Market Tasting
+                    Box for pickup directly at our weekend booth.
                   </p>
                 </div>
-                <p className="mt-6 pt-4 border-t border-[rgba(26,25,23,0.08)] text-xs text-[#5E5B55]">
+                <p className="mt-6 pt-4 border-t border-[rgba(43,41,38,0.08)] text-xs text-[#6E685F]">
                   Hold window · Reserved boxes held until 30 mins before close
                 </p>
               </div>
@@ -553,11 +590,11 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                 return (
                   <div
                     key={stop.id}
-                    className="bg-[#FFFFFF] rounded-lg border border-[rgba(26,25,23,0.1)] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
+                    className="bg-[#FFFFFF] rounded-lg border border-[rgba(43,41,38,0.1)] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
                   >
                     <div className="space-y-2 max-w-xl">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#5E5B55]">
-                        <span className="inline-flex items-center gap-1.5 font-medium text-[#1A1917]">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#6E685F]">
+                        <span className="inline-flex items-center gap-1.5 font-medium text-[#2B2926]">
                           <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
                           {stop.neighborhood}
                         </span>
@@ -566,11 +603,11 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                         <span aria-hidden="true">·</span>
                         <span className="tabular-nums">{stop.hours}</span>
                       </div>
-                      <h3 className="text-lg font-semibold text-[#1A1917]">
+                      <h3 className="text-lg font-semibold text-[#2B2926]">
                         {stop.marketName}
                       </h3>
-                      <p className="text-sm text-[#5E5B55]">
-                        <span className="font-medium text-[#1A1917]">
+                      <p className="text-sm text-[#6E685F]">
+                        <span className="font-medium text-[#2B2926]">
                           {stop.featuredBoxName}:
                         </span>{' '}
                         {stop.contents}
@@ -578,7 +615,7 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                     </div>
 
                     <div className="flex sm:flex-col items-center sm:items-end justify-between gap-3 shrink-0">
-                      <span className="font-mono text-xl font-medium text-[#1A1917] tabular-nums">
+                      <span className="font-mono text-xl font-medium text-[#2B2926] tabular-nums">
                         ${stop.featuredBoxPrice}
                       </span>
                       <button
@@ -586,8 +623,8 @@ export const AtelierStudioSection: React.FC<AtelierStudioSectionProps> = ({
                         onClick={() => handleReserveMarketBox(stop.id)}
                         className={`inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                           isJustAdded
-                            ? 'bg-[#1A1917] text-[#FAF9F6]'
-                            : 'bg-[#2D5A3D] text-[#FAF9F6] hover:bg-[#22452F]'
+                            ? 'bg-[#2B2926] text-[#FAF8F5]'
+                            : 'bg-[#3E5643] text-[#FAF8F5] hover:bg-[#2F4334]'
                         }`}
                       >
                         {isJustAdded ? (
